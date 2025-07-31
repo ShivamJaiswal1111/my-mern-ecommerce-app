@@ -139,12 +139,12 @@ app.use(express.json());
 const vercelRegex = /^https:\/\/my-mern-ecommerce-app-n8j5(?:-[\w]+)?.vercel.app$/;
 const allowedOrigins = [
   'http://localhost:4000',
-  'https://my-mern-ecommerce-app-n8j5.vercel.app', // Main Vercel domain
-  // We will use a regular expression check for any preview domains
+  'https://my-mern-ecommerce-app-n8j5.vercel.app',
 ];
+
 app.use(cors({
   origin: (origin, callback) => {
-    if (!origin || allowedOrigins.indexOf(origin) !== -1 || vercelRegex.test(origin)) {
+    if (!origin || allowedOrigins.includes(origin) || vercelRegex.test(origin)) {
       callback(null, true);
     } else {
       callback(new Error('Not allowed by CORS: ' + origin));
@@ -155,15 +155,7 @@ app.use(cors({
 
 app.use('/uploads', express.static('uploads'));
 
-// Custom Error Handling
-app.use((err, req, res, next) => {
-  if (err instanceof SyntaxError && err.status === 400 && 'body' in err) {
-    return res.status(400).send({ message: 'Invalid JSON payload in request' });
-  }
-  next(err);
-});
-
-// All User Routes
+// Final App Routing
 const userRoutes = Router();
 userRoutes.post('/register', async (req, res) => {
   const { name, email, password } = req.body;

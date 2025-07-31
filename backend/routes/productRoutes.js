@@ -1,3 +1,4 @@
+// A temporary comment to force a change
 import express from 'express';
 import Product from '../models/Product.js'; // Adjust path if needed
 import { protect, admin } from '../middleware/authMiddleware.js'; // For admin routes

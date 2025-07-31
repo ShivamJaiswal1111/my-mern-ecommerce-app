@@ -7,7 +7,7 @@ export const fetchProducts = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       // Frontend calls backend directly on port 5001
-      const { data } = await axios.get('http://my-mern-ecommerce-app.onrender.com/api/products');
+      const { data } = await axios.get('https://my-mern-ecommerce-app.onrender.com/api/products');
       return data;
     } catch (error) {
       return rejectWithValue(error.response?.data?.message || error.message);

@@ -35,7 +35,7 @@ export const registerUser = createAsyncThunk(
         },
       };
       const { data } = await axios.post(
-        'http://my-mern-ecommerce-app.onrender.com/api/users/register', // <--- Direct call to backend
+        'https://my-mern-ecommerce-app.onrender.com/api/users/register', // <--- Direct call to backend
         { name, email, password },
         config
       );

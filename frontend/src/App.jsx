@@ -91,7 +91,7 @@ function HomePage() {
       </div>
 
       <p style={{ marginTop: '50px', fontSize: '0.8em', color: '#aaa' }}>
-        Backend is running on http://my-mern-ecommerce-app.onrender.com/
+        Backend is running on https://my-mern-ecommerce-app.onrender.com/
       </p>
     </div>
   );
@@ -125,7 +125,7 @@ function ProfilePage() {
             'Content-Type': 'application/json',
           },
         };
-        const response = await fetch('http://my-mern-ecommerce-app.onrender.com/api/users/profile', config);
+        const response = await fetch('https://my-mern-ecommerce-app.onrender.com/api/users/profile', config);
 
         console.log('Profile fetch response status:', response.status);
         console.log('Profile fetch response headers:', [...response.headers.entries()]);

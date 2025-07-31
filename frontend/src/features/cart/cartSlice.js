@@ -19,7 +19,7 @@ export const getCart = createAsyncThunk(
       }
 
       const config = { headers: { Authorization: `Bearer ${userInfo.token}` } };
-      const { data } = await axios.get('http://my-mern-ecommerce-app.onrender.com/api/cart', config);
+      const { data } = await axios.get('https://my-mern-ecommerce-app.onrender.com/api/cart', config);
       return { cart: data, ...calculateCartTotals(data.cartItems) };
     } catch (error) {
       return rejectWithValue(error.response?.data?.message || error.message);
@@ -43,7 +43,7 @@ export const addToCart = createAsyncThunk(
           Authorization: `Bearer ${userInfo.token}`,
         },
       };
-      const { data } = await axios.post('http://my-mern-ecommerce-app.onrender.com/api/cart', { productId, qty }, config);
+      const { data } = await axios.post('https://my-mern-ecommerce-app.onrender.com/api/cart', { productId, qty }, config);
       return { cart: data, ...calculateCartTotals(data.cartItems) };
     } catch (error) {
       return rejectWithValue(error.response?.data?.message || error.message);
@@ -63,7 +63,7 @@ export const removeFromCart = createAsyncThunk(
 
       const config = { headers: { Authorization: `Bearer ${userInfo.token}` } };
       await axios.delete(`http://my-mern-ecommerce-app.onrender.com/api/cart/${productId}`, config);
-      const { data } = await axios.get('http://localhost:5001/api/cart', config);
+      const { data } = await axios.get('https://localhost:5001/api/cart', config);
       return { cart: data, ...calculateCartTotals(data.cartItems) };
     } catch (error) {
       return rejectWithValue(error.response?.data?.message || error.message);

@@ -227,7 +227,7 @@ const uploadRoutes = Router();
 uploadRoutes.post('/', upload.single('image'), (req, res) => {
   if (!req.file) { return res.status(400).json({ message: 'No image file provided.' }); }
   const relativePath = req.file.path.replace(/\\/g, '/');
-  const fullImageUrl = `${process.env.CLIENT_URL || 'http://localhost:5001'}/${relativePath}`;
+  const fullImageUrl = `${req.protocol}://${req.get('host')}/${relativePath}`;
   res.status(200).json({ message: 'Image uploaded successfully!', filePath: fullImageUrl });
 });
 

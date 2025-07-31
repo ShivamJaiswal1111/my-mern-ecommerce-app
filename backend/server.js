@@ -12,7 +12,7 @@ import orderRoutes from './routes/orderRoutes.js';
 dotenv.config();
 
 const app = express();
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 5001;
 const MONGO_URI = process.env.MONGO_URI;
 
 // Middleware
@@ -59,10 +59,10 @@ const connectDB = async () => {
 
 // Connect to DB and then start server
 connectDB().then(() => {
-    const HOST = 'localhost';
-    const NEW_PORT = 5001;
+    const HOST = '0.0.0.0';
+    
 
-    app.listen(NEW_PORT, HOST, () => {
-        console.log(`Server running on http://${HOST}:${NEW_PORT}`);
+    app.listen(PORT, HOST, () => {
+        console.log(`Server running on http://${HOST}:${PORT}`);
     });
 });

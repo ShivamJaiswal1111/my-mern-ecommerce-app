@@ -134,7 +134,13 @@ const PORT = process.env.PORT || 5001;
 const MONGO_URI = process.env.MONGO_URI;
 
 app.use(express.json());
-app.use(cors({ origin: [process.env.CLIENT_URL, 'http://localhost:4000'] }));
+
+// FIX: Hardcode CORS policy to bypass environment variable issues on Render
+app.use(cors({
+  origin: 'https://my-mern-ecommerce-app-n8j5.vercel.app', // <--- HARDCODED VERCEL URL
+  credentials: true
+}));
+
 app.use('/uploads', express.static('uploads'));
 
 // Custom Error Handling

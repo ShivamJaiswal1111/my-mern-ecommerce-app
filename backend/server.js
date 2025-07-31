@@ -135,9 +135,21 @@ const MONGO_URI = process.env.MONGO_URI;
 
 app.use(express.json());
 
-// FIX: Hardcode CORS policy to bypass environment variable issues on Render
+// FIX: Use a robust CORS middleware that handles both local and production origins
+const vercelRegex = /^https:\/\/my-mern-ecommerce-app-n8j5(?:-[\w]+)?.vercel.app$/;
+const allowedOrigins = [
+  'http://localhost:4000',
+  'https://my-mern-ecommerce-app-n8j5.vercel.app', // Main Vercel domain
+  // We will use a regular expression check for any preview domains
+];
 app.use(cors({
-  origin: 'https://my-mern-ecommerce-app-n8j5.vercel.app', // <--- HARDCODED VERCEL URL
+  origin: (origin, callback) => {
+    if (!origin || allowedOrigins.indexOf(origin) !== -1 || vercelRegex.test(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS: ' + origin));
+    }
+  },
   credentials: true
 }));
 

@@ -134,21 +134,13 @@ const PORT = process.env.PORT || 5001;
 const MONGO_URI = process.env.MONGO_URI;
 
 app.use(express.json());
-// FIX: Add a robust CORS middleware that handles both local and production origins
-const allowedOrigins = [
-  process.env.CLIENT_URL,
-  'http://localhost:4000',
-];
+
+// FIX: Hardcode CORS policy to bypass environment variable issues on Render
 app.use(cors({
-    origin: (origin, callback) => {
-      if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
-        callback(null, true);
-      } else {
-        callback(new Error('Not allowed by CORS'));
-      }
-    },
-    credentials: true
+  origin: 'https://my-mern-ecommerce-app-n8j5.vercel.app', // <--- HARDCODED VERCEL URL
+  credentials: true
 }));
+
 app.use('/uploads', express.static('uploads'));
 
 // Custom Error Handling
@@ -244,7 +236,6 @@ cartRoutes.post('/', protect, async (req, res) => {
     const itemIndex = cart.cartItems.findIndex(item => item.product.toString() === productId);
     if (itemIndex > -1) { cart.cartItems[itemIndex].qty = qty; }
     else { const cartItem = { product: productId, name: product.name, image: product.image, price: product.price, qty }; cart.cartItems.push(cartItem); }
-    const updatedCart = await cart.save(); res.status(200).json(updatedCart);
   } catch (error) { res.status(500).json({ message: 'Server Error: Could not add/update item in cart' }); }
 });
 cartRoutes.delete('/:productId', protect, async (req, res) => {

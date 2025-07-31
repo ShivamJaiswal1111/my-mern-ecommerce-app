@@ -130,12 +130,25 @@ const upload = multer({ storage: storage });
 // =========================================================================
 dotenv.config();
 const app = express();
-const router = Router();
 const PORT = process.env.PORT || 5001;
 const MONGO_URI = process.env.MONGO_URI;
 
 app.use(express.json());
-app.use(cors({ origin: [process.env.CLIENT_URL, 'http://localhost:4000'] }));
+// FIX: Add a robust CORS middleware that handles both local and production origins
+const allowedOrigins = [
+  process.env.CLIENT_URL,
+  'http://localhost:4000',
+];
+app.use(cors({
+    origin: (origin, callback) => {
+      if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
+        callback(null, true);
+      } else {
+        callback(new Error('Not allowed by CORS'));
+      }
+    },
+    credentials: true
+}));
 app.use('/uploads', express.static('uploads'));
 
 // Custom Error Handling
@@ -170,7 +183,6 @@ userRoutes.get('/', protect, admin, async (req, res) => {
   try { const users = await User.find({}); res.json(users); } catch (error) { res.status(500).json({ message: 'Server Error: Could not fetch all users' }); }
 });
 
-// All Product Routes
 const productRoutes = Router();
 productRoutes.get('/', async (req, res) => {
   try { const products = await Product.find({}); res.json(products); } catch (error) { res.status(500).json({ message: 'Server Error: Could not fetch products' }); }
@@ -207,7 +219,6 @@ productRoutes.delete('/:id', protect, admin, async (req, res) => {
   } catch (error) { res.status(500).json({ message: 'Server Error: Could not delete product' }); }
 });
 
-// All Upload Routes
 const uploadRoutes = Router();
 uploadRoutes.post('/', upload.single('image'), (req, res) => {
   if (!req.file) { return res.status(400).json({ message: 'No image file provided.' }); }
@@ -216,7 +227,6 @@ uploadRoutes.post('/', upload.single('image'), (req, res) => {
   res.status(200).json({ message: 'Image uploaded successfully!', filePath: fullImageUrl });
 });
 
-// All Cart Routes
 const cartRoutes = Router();
 cartRoutes.get('/', protect, async (req, res) => {
   try { const cart = await Cart.findOne({ user: req.user._id }).populate('cartItems.product', 'name image price'); if (cart) { res.json(cart); } else { res.json({ user: req.user._id, cartItems: [] }); } }
@@ -247,7 +257,6 @@ cartRoutes.delete('/:productId', protect, async (req, res) => {
   } catch (error) { res.status(500).json({ message: 'Server Error: Could not remove item from cart' }); }
 });
 
-// All Order Routes
 const orderRoutes = Router();
 orderRoutes.post('/', protect, async (req, res) => {
   const { orderItems, shippingAddress, paymentMethod, taxPrice, shippingPrice, totalPrice } = req.body;
@@ -304,7 +313,6 @@ orderRoutes.put('/:id/deliver', protect, admin, async (req, res) => {
     } else { res.status(404).json({ message: 'Order not found' }); }
   } catch (error) { res.status(500).json({ message: 'Server Error: Could not update order to delivered' }); }
 });
-
 
 // Final App Routing
 app.use('/api/users', userRoutes);

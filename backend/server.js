@@ -107,7 +107,7 @@ const protect = async (req, res, next) => {
       token = req.headers.authorization.split(' ')[1];
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
       req.user = await User.findById(decoded.id).select('-password');
-      next();
+      return next();
     } catch (error) { res.status(401).json({ message: 'Not authorized, token failed' }); }
   }
   if (!token) { res.status(401).json({ message: 'Not authorized, no token' }); }
@@ -219,7 +219,9 @@ const uploadRoutes = Router();
 uploadRoutes.post('/', upload.single('image'), (req, res) => {
   if (!req.file) { return res.status(400).json({ message: 'No image file provided.' }); }
   const relativePath = req.file.path.replace(/\\/g, '/');
-  const fullImageUrl = `${process.env.CLIENT_URL || 'http://localhost:5001'}/${relativePath}`;
+  const protocol = req.protocol === 'http' ? 'https' : req.protocol;
+  
+  const fullImageUrl = `${protocol}://${req.get('host')}/${relativePath}`;
   res.status(200).json({ message: 'Image uploaded successfully!', filePath: fullImageUrl });
 });
 
@@ -240,6 +242,9 @@ cartRoutes.post('/', protect, async (req, res) => {
     const itemIndex = cart.cartItems.findIndex(item => item.product.toString() === productId);
     if (itemIndex > -1) { cart.cartItems[itemIndex].qty = qty; }
     else { const cartItem = { product: productId, name: product.name, image: product.image, price: product.price, qty }; cart.cartItems.push(cartItem); }
+    const updatedCart = await cart.save();
+    return res.status(200).json(updatedCart); // <-- FIXED
+
   } catch (error) { res.status(500).json({ message: 'Server Error: Could not add/update item in cart' }); }
 });
 cartRoutes.delete('/:productId', protect, async (req, res) => {

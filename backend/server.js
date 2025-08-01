@@ -219,15 +219,9 @@ const uploadRoutes = Router();
 uploadRoutes.post('/', upload.single('image'), (req, res) => {
   if (!req.file) { return res.status(400).json({ message: 'No image file provided.' }); }
   const relativePath = req.file.path.replace(/\\/g, '/');
-  const host = process.env.NODE_ENV === 'production'
-      ? req.get('host') // In production, use the deployed hostname from the request headers
-      : 'localhost:5001'; // In development, use localhost
-
-  const protocol = process.env.NODE_ENV === 'production'
-      ? 'https' // In production, Render uses HTTPS
-      : 'http'; // In development, use HTTP
-
-  const fullImageUrl = `${protocol}://${host}/${relativePath}`;
+  const protocol = req.protocol === 'http' ? 'https' : req.protocol;
+  
+  const fullImageUrl = `${protocol}://${req.get('host')}/${relativePath}`;
   res.status(200).json({ message: 'Image uploaded successfully!', filePath: fullImageUrl });
 });
 

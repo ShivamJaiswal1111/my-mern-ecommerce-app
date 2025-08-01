@@ -136,7 +136,7 @@ const MONGO_URI = process.env.MONGO_URI;
 app.use(express.json());
 
 // FIX: Use a robust CORS middleware that handles both local and production origins
-const vercelRegex = /^https:\/\/my-mern-ecommerce-app-n8j5(?:-[\w]+)?.vercel.app$/;
+const vercelRegex = /^https:\/\/my-mern-ecommerce-app-n8j5(-[\w]+)?\.vercel.app$/;
 const allowedOrigins = [
   'http://localhost:4000',
   'https://my-mern-ecommerce-app-n8j5.vercel.app',

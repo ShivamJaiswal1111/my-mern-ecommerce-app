@@ -1,14 +1,12 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-// Helper function to calculate total items and total price
 const calculateCartTotals = (items) => {
   const totalItems = items.reduce((acc, item) => acc + item.qty, 0);
   const totalPrice = items.reduce((acc, item) => acc + item.qty * item.price, 0);
   return { totalItems, totalPrice };
 };
 
-// Async Thunk to fetch user's cart
 export const getCart = createAsyncThunk(
   'cart/getCart',
   async (_, { rejectWithValue, getState }) => {
@@ -17,7 +15,6 @@ export const getCart = createAsyncThunk(
       if (!userInfo || !userInfo.token) {
         return rejectWithValue('Not authenticated. Please log in.');
       }
-
       const config = { headers: { Authorization: `Bearer ${userInfo.token}` } };
       const { data } = await axios.get('https://my-mern-ecommerce-app.onrender.com/api/cart', config);
       return { cart: data, ...calculateCartTotals(data.cartItems) };
@@ -27,7 +24,6 @@ export const getCart = createAsyncThunk(
   }
 );
 
-// Async Thunk to add item to cart or update quantity
 export const addToCart = createAsyncThunk(
   'cart/addToCart',
   async ({ productId, qty }, { rejectWithValue, getState }) => {
@@ -36,7 +32,6 @@ export const addToCart = createAsyncThunk(
       if (!userInfo || !userInfo.token) {
         return rejectWithValue('Not authenticated. Please log in.');
       }
-
       const config = {
         headers: {
           'Content-Type': 'application/json',
@@ -51,7 +46,6 @@ export const addToCart = createAsyncThunk(
   }
 );
 
-// Async Thunk to remove item from cart
 export const removeFromCart = createAsyncThunk(
   'cart/removeFromCart',
   async (productId, { rejectWithValue, getState }) => {
@@ -60,10 +54,8 @@ export const removeFromCart = createAsyncThunk(
       if (!userInfo || !userInfo.token) {
         return rejectWithValue('Not authenticated. Please log in.');
       }
-
       const config = { headers: { Authorization: `Bearer ${userInfo.token}` } };
-      await axios.delete(`https://my-mern-ecommerce-app.onrender.com/api/cart/${productId}`, config);
-      const { data } = await axios.get('https://my-mern-ecommerce-app.onrender.com/api/cart', config);
+      const { data } = await axios.delete(`https://my-mern-ecommerce-app.onrender.com/api/cart/${productId}`, config);
       return { cart: data, ...calculateCartTotals(data.cartItems) };
     } catch (error) {
       return rejectWithValue(error.response?.data?.message || error.message);
@@ -94,17 +86,15 @@ const cartSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      // Handle getCart
       .addCase(getCart.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
       .addCase(getCart.fulfilled, (state, action) => {
         state.loading = false;
-        // FIX: Ensure item.product is stored as a string ID
         state.cartItems = action.payload.cart.cartItems.map(item => ({
           ...item,
-          product: item.product._id ? item.product._id.toString() : item.product // Convert if it's an object ID
+          product: item.product?._id || item.product,
         }));
         state.totalItems = action.payload.totalItems;
         state.totalPrice = action.payload.totalPrice;
@@ -116,17 +106,15 @@ const cartSlice = createSlice({
         state.totalItems = 0;
         state.totalPrice = 0;
       })
-      // Handle addToCart
       .addCase(addToCart.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
       .addCase(addToCart.fulfilled, (state, action) => {
         state.loading = false;
-        // FIX: Ensure item.product is stored as a string ID
         state.cartItems = action.payload.cart.cartItems.map(item => ({
           ...item,
-          product: item.product._id ? item.product._id.toString() : item.product // Convert if it's an object ID
+          product: item.product?._id || item.product,
         }));
         state.totalItems = action.payload.totalItems;
         state.totalPrice = action.payload.totalPrice;
@@ -135,17 +123,15 @@ const cartSlice = createSlice({
         state.loading = false;
         state.error = action.payload;
       })
-      // Handle removeFromCart
       .addCase(removeFromCart.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
       .addCase(removeFromCart.fulfilled, (state, action) => {
         state.loading = false;
-        // FIX: Ensure item.product is stored as a string ID
         state.cartItems = action.payload.cart.cartItems.map(item => ({
           ...item,
-          product: item.product._id ? item.product._id.toString() : item.product // Convert if it's an object ID
+          product: item.product?._id || item.product,
         }));
         state.totalItems = action.payload.totalItems;
         state.totalPrice = action.payload.totalPrice;

@@ -1,0 +1,120 @@
+[{
+  "_id": {
+    "$oid": "688a3094692b81a0a7756f7f"
+  },
+  "name": "Smartwatch Pro X",
+  "description": "Advanced smartwatch with health tracking and long battery life.",
+  "price": 2499,
+  "image": "http://localhost:5001/uploads/image-1753892979363.jpg",
+  "brand": "WearableTech",
+  "category": "Wearables",
+  "countInStock": 26,
+  "rating": 0,
+  "numReviews": 0,
+  "user": {
+    "$oid": "688a043892359c83d30a97e2"
+  },
+  "createdAt": {
+    "$date": "2025-07-30T14:47:48.805Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-30T21:40:24.347Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "688a30ec692b81a0a7756f84"
+  },
+  "name": "Super Gaming Laptop",
+  "description": "Powerful gaming laptop with latest GPU and high refresh rate display.",
+  "price": 59999,
+  "image": "http://localhost:5001/uploads/image-1753894684172.jpg",
+  "brand": "GameMax",
+  "category": "Laptops",
+  "countInStock": 15,
+  "rating": 0,
+  "numReviews": 0,
+  "user": {
+    "$oid": "688a043892359c83d30a97e2"
+  },
+  "createdAt": {
+    "$date": "2025-07-30T14:49:16.175Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-30T17:00:00.330Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "688a3147692b81a0a7756f89"
+  },
+  "name": "Smart Home Hub 3.0",
+  "description": "Central control unit for all your smart home devices. Compatible with voice assistants.",
+  "price": 5999,
+  "image": "http://localhost:5001/uploads/image-1753894833165.jpg",
+  "brand": "ConnectHome",
+  "category": "Smart Home",
+  "countInStock": 40,
+  "rating": 0,
+  "numReviews": 0,
+  "user": {
+    "$oid": "688a043892359c83d30a97e2"
+  },
+  "createdAt": {
+    "$date": "2025-07-30T14:50:47.976Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-30T17:01:55.849Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "688a315e692b81a0a7756f8c"
+  },
+  "name": "Pro DSLR Camera Z9",
+  "description": "High-resolution full-frame DSLR camera for professional photographers. Includes 24-70mm lens.",
+  "price": 45999,
+  "image": "http://localhost:5001/uploads/image-1753896139839.jpg",
+  "brand": "PhotoMaster",
+  "category": "Cameras",
+  "countInStock": 8,
+  "rating": 0,
+  "numReviews": 0,
+  "user": {
+    "$oid": "688a043892359c83d30a97e2"
+  },
+  "createdAt": {
+    "$date": "2025-07-30T14:51:10.313Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-30T17:25:28.547Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "688a3264692b81a0a7756f9a"
+  },
+  "name": "ErgoType Wireless Keyboard",
+  "description": "Ergonomic wireless keyboard designed for comfort and productivity with silent keys.",
+  "price": 750,
+  "image": "http://localhost:5001/uploads/image-1753894983358.jpg",
+  "brand": "ComfortKeys",
+  "category": "Peripherals",
+  "countInStock": 60,
+  "rating": 0,
+  "numReviews": 0,
+  "user": {
+    "$oid": "688a043892359c83d30a97e2"
+  },
+  "createdAt": {
+    "$date": "2025-07-30T14:55:32.477Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-30T17:04:23.150Z"
+  },
+  "__v": 0
+}]

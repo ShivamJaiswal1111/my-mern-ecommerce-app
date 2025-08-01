@@ -1,0 +1,82 @@
+[{
+  "_id": {
+    "$oid": "688a78d644b60227f365c1ae"
+  },
+  "user": {
+    "$oid": "688a4b478b08e72b93df54fa"
+  },
+  "cartItems": [
+    {
+      "product": {
+        "$oid": "688a30ec692b81a0a7756f84"
+      },
+      "name": "Super Gaming Laptop",
+      "image": "http://localhost:5001/uploads/image-1753894684172.jpg",
+      "price": 59999,
+      "qty": 1,
+      "_id": {
+        "$oid": "688a793544b60227f365c223"
+      }
+    },
+    {
+      "product": {
+        "$oid": "688a30ec692b81a0a7756f84"
+      },
+      "name": "Super Gaming Laptop",
+      "image": "http://localhost:5001/uploads/image-1753894684172.jpg",
+      "price": 59999,
+      "qty": 2,
+      "_id": {
+        "$oid": "688a7ace8cda8e57e2e9d289"
+      }
+    }
+  ],
+  "createdAt": {
+    "$date": "2025-07-30T19:56:06.662Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-30T20:04:30.836Z"
+  },
+  "__v": 10
+},
+{
+  "_id": {
+    "$oid": "688a7af38cda8e57e2e9d2a1"
+  },
+  "user": {
+    "$oid": "688a00d692359c83d30a97da"
+  },
+  "cartItems": [
+    {
+      "product": {
+        "$oid": "688a3094692b81a0a7756f7f"
+      },
+      "name": "Smartwatch Pro X",
+      "image": "http://localhost:5001/uploads/image-1753892979363.jpg",
+      "price": 2499,
+      "qty": 1,
+      "_id": {
+        "$oid": "688a7af38cda8e57e2e9d2a2"
+      }
+    },
+    {
+      "product": {
+        "$oid": "688a3094692b81a0a7756f7f"
+      },
+      "name": "Smartwatch Pro X",
+      "image": "http://localhost:5001/uploads/image-1753892979363.jpg",
+      "price": 2499,
+      "qty": 2,
+      "_id": {
+        "$oid": "688a7af98cda8e57e2e9d2b0"
+      }
+    }
+  ],
+  "createdAt": {
+    "$date": "2025-07-30T20:05:07.599Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-30T20:05:13.033Z"
+  },
+  "__v": 1
+}]

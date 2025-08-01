@@ -1,0 +1,135 @@
+[{
+  "_id": {
+    "$oid": "688a837241fbf78e71e41242"
+  },
+  "user": {
+    "$oid": "688a043892359c83d30a97e2"
+  },
+  "orderItems": [
+    {
+      "name": "Smartwatch Pro X",
+      "qty": 1,
+      "image": "http://localhost:5001/uploads/image-1753892979363.jpg",
+      "price": 2499,
+      "product": {
+        "$oid": "688a3094692b81a0a7756f7f"
+      },
+      "_id": {
+        "$oid": "688a837241fbf78e71e41243"
+      }
+    }
+  ],
+  "shippingAddress": {
+    "address": "456 Park Avenue",
+    "city": "Bengaluru",
+    "postalCode": "560001",
+    "country": "India"
+  },
+  "paymentMethod": "UPI",
+  "taxPrice": 3124.9,
+  "shippingPrice": 500,
+  "totalPrice": 66122.9,
+  "isPaid": true,
+  "isDelivered": true,
+  "createdAt": {
+    "$date": "2025-07-30T20:41:22.970Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-30T20:55:49.554Z"
+  },
+  "__v": 0,
+  "paidAt": {
+    "$date": "2025-07-30T20:53:18.817Z"
+  },
+  "paymentResult": {
+    "id": "PAYMENT_ID_ABC123",
+    "status": "COMPLETED",
+    "update_time": "2025-07-31T02:30:00Z",
+    "email_address": "payment_email@example.com"
+  },
+  "deliveredAt": {
+    "$date": "2025-07-30T20:55:49.553Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "688a899267ee05cd4f20d103"
+  },
+  "user": {
+    "$oid": "688a4c5c8b08e72b93df54fe"
+  },
+  "orderItems": [
+    {
+      "name": "Smartwatch Pro X",
+      "qty": 1,
+      "image": "http://localhost:5001/uploads/image-1753892979363.jpg",
+      "price": 2499,
+      "product": {
+        "$oid": "688a3094692b81a0a7756f7f"
+      },
+      "_id": {
+        "$oid": "688a899267ee05cd4f20d104"
+      }
+    }
+  ],
+  "shippingAddress": {
+    "address": "sxwcwe",
+    "city": "dcece",
+    "postalCode": "343554",
+    "country": "cdvdf"
+  },
+  "paymentMethod": "CashOnDelivery",
+  "taxPrice": 0,
+  "shippingPrice": 0,
+  "totalPrice": 2499,
+  "isPaid": false,
+  "isDelivered": false,
+  "createdAt": {
+    "$date": "2025-07-30T21:07:30.665Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-30T21:07:30.665Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "688a914802a0e01e48daf2db"
+  },
+  "user": {
+    "$oid": "688a4c5c8b08e72b93df54fe"
+  },
+  "orderItems": [
+    {
+      "name": "Smartwatch Pro X",
+      "qty": 2,
+      "image": "http://localhost:5001/uploads/image-1753892979363.jpg",
+      "price": 2499,
+      "product": {
+        "$oid": "688a3094692b81a0a7756f7f"
+      },
+      "_id": {
+        "$oid": "688a914802a0e01e48daf2dc"
+      }
+    }
+  ],
+  "shippingAddress": {
+    "address": "dawdasd",
+    "city": "dsedsc",
+    "postalCode": "234233",
+    "country": "india"
+  },
+  "paymentMethod": "CashOnDelivery",
+  "taxPrice": 0,
+  "shippingPrice": 0,
+  "totalPrice": 4998,
+  "isPaid": false,
+  "isDelivered": false,
+  "createdAt": {
+    "$date": "2025-07-30T21:40:24.343Z"
+  },
+  "updatedAt": {
+    "$date": "2025-07-30T21:40:24.343Z"
+  },
+  "__v": 0
+}]

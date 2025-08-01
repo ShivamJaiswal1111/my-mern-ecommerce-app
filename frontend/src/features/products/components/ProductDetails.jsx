@@ -1,74 +1,54 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import axios from 'axios';
-import { useDispatch, useSelector } from 'react-redux'; // <--- Ensure useDispatch is imported
-import { addToCart } from '../../cart/cartSlice'; // <--- NEW IMPORT (adjust path if needed)
+import { useDispatch, useSelector } from 'react-redux';
+import { addToCart } from '../../cart/cartSlice';
 
 function ProductDetails() {
-  const { id } = useParams(); // Get product ID from URL
+  const { id } = useParams();
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const dispatch = useDispatch(); // Initialize useDispatch hook
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const fetchProduct = async () => {
       setLoading(true);
       setError(null);
       try {
-        // Frontend calls backend directly on port 5001
-        console.log(`Fetching product details for ID: ${id}`);
         const { data } = await axios.get(`https://my-mern-ecommerce-app.onrender.com/api/products/${id}`);
         setProduct(data);
       } catch (err) {
-        console.error("Error fetching product details:", err.response?.data?.message || err.message);
         setError(err.response?.data?.message || 'Failed to load product details');
       } finally {
         setLoading(false);
       }
     };
-
     if (id) {
       fetchProduct();
     }
-  }, [id]); // Re-fetch if ID changes
+  }, [id]);
 
   const handleAddToCart = () => {
-    // You can add a quantity selector later, for now, default to 1
-    const qty = 1; // Default quantity when adding from details page
-    if (product.countInStock >= qty) {
+    const qty = 1;
+    if (product?.countInStock >= qty) {
       dispatch(addToCart({ productId: product._id, qty }));
-      console.log(`Added ${qty} of ${product.name} to cart.`);
-      // Show success message/toast
     } else {
-      console.log(`${product.name} is out of stock or requested quantity exceeds available.`);
-      // Show error message
+      console.log('Product is out of stock.');
     }
   };
 
   if (loading) {
     return <div style={{ textAlign: 'center', padding: '50px', color: 'white' }}>Loading product details...</div>;
   }
-
   if (error) {
-    return (
-      <div style={{ textAlign: 'center', padding: '50px', color: 'red' }}>
-        <p>{error}</p>
-        <Link to="/" style={{ color: '#61dafb' }}>Go back to products</Link>
-      </div>
-    );
+    return <div style={{ textAlign: 'center', padding: '50px', color: 'red' }}>Error: {error}</div>;
   }
-
   if (!product) {
-    return (
-      <div style={{ textAlign: 'center', padding: '50px', color: 'white' }}>
-        <p>Product not found.</p>
-        <Link to="/" style={{ color: '#61dafb' }}>Go back to products</Link>
-      </div>
-    );
+    return <div style={{ textAlign: 'center', padding: '50px', color: 'white' }}>Product not found.</div>;
   }
-
+  
   return (
     <div style={{
       display: 'flex',
@@ -82,10 +62,9 @@ function ProductDetails() {
       <Link to="/" style={{ alignSelf: 'flex-start', marginBottom: '20px', color: '#61dafb', textDecoration: 'none' }}>
         ← Back to Products
       </Link>
-
       <div style={{
         display: 'flex',
-        flexDirection: 'column', // Changed to column for mobile/smaller screens
+        flexDirection: 'column',
         alignItems: 'center',
         gap: '30px',
         maxWidth: '900px',
@@ -100,21 +79,16 @@ function ProductDetails() {
           alt={product.name}
           style={{ maxWidth: '400px', width: '100%', height: 'auto', borderRadius: '8px' }}
         />
-
         <div style={{ textAlign: 'left', width: '100%' }}>
           <h2 style={{ color: '#61dafb', marginBottom: '10px' }}>{product.name}</h2>
-          <p style={{ fontSize: '1.1em', marginBottom: '10px' }}><strong>Brand:</strong> {product.brand}</p>
-          <p style={{ fontSize: '1.1em', marginBottom: '10px' }}><strong>Category:</strong> {product.category}</p>
-          <p style={{ fontSize: '1.2em', marginBottom: '20px' }}><strong>Price:</strong> ₹{product.price.toFixed(2)}</p>
-          <p style={{ marginBottom: '20px' }}>{product.description}</p>
-          <p style={{ fontSize: '1em', color: '#ccc' }}>
-            Stock: {product.countInStock > 0 ? `${product.countInStock} In Stock` : 'Out Of Stock'}
-          </p>
-          <p style={{ fontSize: '1em', color: '#ccc' }}>
-            Rating: {product.rating} stars ({product.numReviews} reviews)
-          </p>
-
+          <p><strong>Brand:</strong> {product.brand}</p>
+          <p><strong>Category:</strong> {product.category}</p>
+          <p><strong>Price:</strong> ₹{product.price.toFixed(2)}</p>
+          <p>{product.description}</p>
+          <p>Stock: {product.countInStock > 0 ? `${product.countInStock} In Stock` : 'Out Of Stock'}</p>
+          <p>Rating: {product.rating} stars ({product.numReviews} reviews)</p>
           <button
+            onClick={handleAddToCart}
             disabled={product.countInStock === 0}
             style={{
               padding: '12px 25px',
@@ -124,10 +98,8 @@ function ProductDetails() {
               borderRadius: '5px',
               cursor: product.countInStock === 0 ? 'not-allowed' : 'pointer',
               fontSize: '1.1em',
-              marginTop: '20px',
-              transition: 'background-color 0.3s ease'
+              marginTop: '20px'
             }}
-            onClick={handleAddToCart} // Call the new handler
           >
             {product.countInStock === 0 ? 'Out Of Stock' : 'Add to Cart'}
           </button>

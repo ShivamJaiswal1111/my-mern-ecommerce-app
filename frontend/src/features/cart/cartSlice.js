@@ -39,7 +39,7 @@ export const addToCart = createAsyncThunk(
         },
       };
       const { data } = await axios.post('https://my-mern-ecommerce-app.onrender.com/api/cart', { productId, qty }, config);
-      return { cart: data, ...calculateCartTotals(data.cartItems) };
+      return { cart: data, ...calculateCartTotals(data.cartItems || []) };
     } catch (error) {
       return rejectWithValue(error.response?.data?.message || error.message);
     }
@@ -56,7 +56,7 @@ export const removeFromCart = createAsyncThunk(
       }
       const config = { headers: { Authorization: `Bearer ${userInfo.token}` } };
       const { data } = await axios.delete(`https://my-mern-ecommerce-app.onrender.com/api/cart/${productId}`, config);
-      return { cart: data, ...calculateCartTotals(data.cartItems) };
+      return { cart: data, ...calculateCartTotals(data.cartItems || []) };
     } catch (error) {
       return rejectWithValue(error.response?.data?.message || error.message);
     }
@@ -94,7 +94,8 @@ const cartSlice = createSlice({
         state.loading = false;
         state.cartItems = action.payload.cart.cartItems.map(item => ({
           ...item,
-          product: item.product?._id || item.product,
+          product: item.product && item.product._id ? item.product._id : item.product,
+
         }));
         state.totalItems = action.payload.totalItems;
         state.totalPrice = action.payload.totalPrice;
@@ -114,7 +115,8 @@ const cartSlice = createSlice({
         state.loading = false;
         state.cartItems = action.payload.cart.cartItems.map(item => ({
           ...item,
-          product: item.product?._id || item.product,
+          product: item.product && item.product._id ? item.product._id : item.product,
+
         }));
         state.totalItems = action.payload.totalItems;
         state.totalPrice = action.payload.totalPrice;
@@ -131,7 +133,8 @@ const cartSlice = createSlice({
         state.loading = false;
         state.cartItems = action.payload.cart.cartItems.map(item => ({
           ...item,
-          product: item.product?._id || item.product,
+          product: item.product && item.product._id ? item.product._id : item.product,
+
         }));
         state.totalItems = action.payload.totalItems;
         state.totalPrice = action.payload.totalPrice;

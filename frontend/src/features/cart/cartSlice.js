@@ -62,8 +62,8 @@ export const removeFromCart = createAsyncThunk(
       }
 
       const config = { headers: { Authorization: `Bearer ${userInfo.token}` } };
-      await axios.delete(`http://my-mern-ecommerce-app.onrender.com/api/cart/${productId}`, config);
-      const { data } = await axios.get('https://localhost:5001/api/cart', config);
+      await axios.delete(`https://my-mern-ecommerce-app.onrender.com/api/cart/${productId}`, config);
+      const { data } = await axios.get('https://my-mern-ecommerce-app.onrender.com/api/cart', config);
       return { cart: data, ...calculateCartTotals(data.cartItems) };
     } catch (error) {
       return rejectWithValue(error.response?.data?.message || error.message);

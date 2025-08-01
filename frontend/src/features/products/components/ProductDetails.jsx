@@ -19,7 +19,7 @@ function ProductDetails() {
       try {
         // Frontend calls backend directly on port 5001
         console.log(`Fetching product details for ID: ${id}`);
-        const { data } = await axios.get(`http://localhost:5001/api/products/${id}`);
+        const { data } = await axios.get(`https://my-mern-ecommerce-app.onrender.com/api/products/${id}`);
         setProduct(data);
       } catch (err) {
         console.error("Error fetching product details:", err.response?.data?.message || err.message);

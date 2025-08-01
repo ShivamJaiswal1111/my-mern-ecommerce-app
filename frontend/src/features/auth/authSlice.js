@@ -12,7 +12,7 @@ export const loginUser = createAsyncThunk(
         },
       };
       const { data } = await axios.post(
-        'http://localhost:5001/api/users/login', // <--- Direct call to backend
+        'https://my-mern-ecommerce-app.onrender.com/api/users/login', // <--- Direct call to backend
         { email, password },
         config
       );

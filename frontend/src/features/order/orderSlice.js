@@ -18,7 +18,7 @@ export const createOrder = createAsyncThunk(
         },
       };
       // Frontend calls backend directly on port 5001
-      const { data } = await axios.post('http://localhost:5001/api/orders', order, config);
+      const { data } = await axios.post('https://my-mern-ecommerce-app.onrender.com/api/orders', order, config);
       return data; // Returns the created order object
     } catch (error) {
       return rejectWithValue(error.response?.data?.message || error.message);
@@ -41,7 +41,7 @@ export const getOrderById = createAsyncThunk(
           Authorization: `Bearer ${userInfo.token}`,
         },
       };
-      const { data } = await axios.get(`http://localhost:5001/api/orders/${orderId}`, config);
+      const { data } = await axios.get(`https://my-mern-ecommerce-app.onrender.com/api/orders/${orderId}`, config);
       return data; // Returns the fetched order object
     } catch (error) {
       return rejectWithValue(error.response?.data?.message || error.message);
